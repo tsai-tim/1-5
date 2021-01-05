@@ -2,6 +2,11 @@
 int xpin = A1;                  //感測器 X_OUT 連接 Arduino pin A1
 int ypin = A2;                  //感測器 Y_OUT 連接 Arduino pin A2
 int zpin = A3;                  //感測器 Z_OUT 連接 Arduino pin A3
+int t = 0;                      
+int o = 0;                      //上
+int oo = 0;                     //下
+int ooo = 0;                    //左 
+int oooo = 0;                   //右
 
 void setup()
 {
@@ -22,32 +27,81 @@ if(x<=350 && x>=340) //X
 {
   digitalWrite(2, HIGH);
   digitalWrite(3, HIGH);
+  o=0;
+  oo=0;
+  ooo=0;
+  oooo=0;
 }
-if(x>350)
+if(x>350)                    //右
 {
-  digitalWrite(2, HIGH);
-  digitalWrite(3, LOW);
+  ooo=0;
+  if(oooo<4)
+  {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+  }
+    if(oooo>4)
+  {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+  }  
+  oooo++;
 }
-if(x<340)
+if(x<340)                   //左
 {
-  digitalWrite(2, LOW);
-  digitalWrite(3, HIGH);
-}                     //X
-if(y<=350 && x>=340) //Y
+  oooo=0;
+  if(ooo<4)
+  {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+  }
+    if(ooo>4)
+  {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+  }  
+  ooo++;
+}                         //X
+if(y<=350 && x>=340)      //Y
 {
   digitalWrite(4, HIGH);
   digitalWrite(5, HIGH);
+  o=0;
+  oo=0;
+  ooo=0;
+  oooo=0;
 }
-if(y>350)
+if(y>350)                 //前
 {
-  digitalWrite(4, HIGH);
-  digitalWrite(5, LOW);
+  oo=0;
+  if(o<4)
+  {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+  }
+    if(o>4)
+  {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+  }  
+  o++; 
 }
-if(y<340)
+if(y<340)                //後
 {
-  digitalWrite(4, LOW);
-  digitalWrite(5, HIGH);
+  o=0;
+  if(oo<4)
+  {
+    digitalWrite(4, LOW);
+    digitalWrite(5, HIGH);
+  }
+    if(oo>4)
+  {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+  }  
+  oo++;  
 }                     //Y
+
 
 Serial.print("X ");
 Serial.print(x);            //在序列埠螢幕中印出X Y Z的讀值
